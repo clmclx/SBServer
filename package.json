@@ -4,7 +4,8 @@
   "description": "Server for Spelling Bee Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "dependencies": {
     "diacritic": "0.0.2",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.3"
   }
 }
