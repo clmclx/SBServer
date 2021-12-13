@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/clmclx/SBServer/issues"
   },
-  "homepage": "https://github.com/clmclx/SBServer#readme"
+  "homepage": "https://github.com/clmclx/SBServer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
