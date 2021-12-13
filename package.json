@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/clmclx/SBServer#readme",
   "dependencies": {
+    "diacritic": "0.0.2",
     "express": "^4.17.1"
   }
 }
