@@ -1,3 +1,4 @@
+import {SpellingBeeInputSet} from "./generate";
 
 
 const has4Letters = (word: string): boolean => {
@@ -11,7 +12,20 @@ const isPangram = (word: string, letterSet: string[]): boolean => {
     return characterNotInSet === undefined;
 }
 
+const matchesSpellingBeeSet = (word: string, letterSet: SpellingBeeInputSet) => {
+    const hasRequiredLetter = word.includes(letterSet.required);
+    let doesNotHaveExcludedLetters = true;
+
+    word.split("").forEach(letter => {
+        doesNotHaveExcludedLetters = doesNotHaveExcludedLetters && letterSet.charSet.includes(letter)
+    })
+
+    return hasRequiredLetter && doesNotHaveExcludedLetters
+}
+
 const computeScore = (word: string, letterSet: string[]): number => {
     let pangramScore = isPangram(word, letterSet)? 7 : 0;
     return  word.length >=4 ? word.length - 3 + pangramScore: 0;
 }
+
+module.exports= {has4Letters,isPangram,computeScore, matchesSpellingBeeSet};
