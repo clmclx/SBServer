@@ -1,8 +1,14 @@
+/**
+ * An utility program that transforms a dictionary input into a dictionary usable for the Spelling bee server
+ * */
+import _ = require("lodash");
+
+
 const fs = require('fs');
 const diacritics = require('diacritic');
 
 let file = fs.createWriteStream('noAccent.txt');
-const noAccent = fs.readFile('liste_francais.txt',{encoding: "latin1"},(err, data) => {
+fs.readFile('liste_francais.txt',{encoding: "latin1"},(err, data) => {
     let words = data.split(/\r?\n/);
     let newWords = words.forEach((word) => {
         console.log(word);
@@ -15,8 +21,6 @@ const noAccent = fs.readFile('liste_francais.txt',{encoding: "latin1"},(err, dat
             file.write(noAccent+ ',\n');
         }
     })
-
-    return newWords;
 });
 
 

@@ -1,41 +1,27 @@
 import {SpellingBeeInputSet} from "./utils/sb/generate";
 
+const config = require('./utils/config');
 const express = require('express')
+const cors = require('cors');
+const wordRouter = require('./controllers/words');
 const morgan = require('morgan');
 const validation = require('./utils/sb/validation');
+const logger = require('./utils/logger');
+const middleware = require('./utils/middleware')
+
+logger.info('connecting to ', config.MONGODB_URI);
+
 
 let app = express();
 app.use(express.json())
+app.use(middleware.requestLogger)
+app.use('/sb/api/', wordRouter);
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 // be able to log API request in  the console
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
+// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
 
-const charSet: string[] = process.argv[2].split("");
+// const charSet: string[] = process.argv[2].split("");
 
-const sbSet: SpellingBeeInputSet = {
-    required: charSet[0],
-    charSet: charSet
-}
-
-
-
-// be able to set environment variables
-require('dotenv').config();
-
-app.get('/sb/api/check', (request, response) => {
-    let payload = request.body;
-    let word: string = payload.word;
-    if (!validation.has4Letters(word)) {
-        response.status(200).json({
-            error: 'not enough letters'
-        })
-    } else if (!validation.matchesSpellingBeeSet(word, sbSet)) {
-        response.status(200).json({
-            error: `char set does not match spellingbeeSet ${sbSet.charSet.join("")}`
-        })
-    } else {
-        validation.computeScore(word, sbSet)
-    }
-})
-
-module.exports = {app}
+module.exports = app
